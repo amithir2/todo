@@ -28,8 +28,8 @@
 			$.get("/report", function( records ) {
 				records.forEach(function(record){
 					array.push(record);
-					console.log( record.name);
 				});
+				console.log( record.name);
 			});
 		</script>
 		<ul class="list-group">

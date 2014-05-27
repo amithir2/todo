@@ -39,6 +39,7 @@ app.get('/', function(req,res){
 			due: req.query.due, 
 			loc: req.query.loc
 		}); 
+		console.log(req.query.task);
 		
 		task.save(function (err, task) {
 			if(err) return console.error(err);
