@@ -4,6 +4,7 @@ var https = require('https');
 var hbs = require('handlebars');
 var router = express.Router();
 var path = require('path');
+var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -21,6 +22,8 @@ mongoose.connect('mongodb://localhost/test');
 
 var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(require("connect").bodyParser());
+var currIdx;
 
 app.get('/addtask', function(req, res){
 	fs.readFile('./addtask.hbs', function(err, data){
@@ -29,6 +32,15 @@ app.get('/addtask', function(req, res){
 		res.send(template());
 		
 	});
+});
+
+app.get('/details', function(req, res){
+	fs.readFile('./details.hbs', function(err, data){
+		if(err) throw err;
+		var template = hbs.compile(data.toString());
+		res.send(template());	
+	});
+
 });
 
 app.get('/', function(req,res){
@@ -60,5 +72,27 @@ app.all('/report', function(req,res){
 	});
 });
 
+app.all('/clear', function(req,res){
+/*	Task.find({}, function(err, records){
+		res.send(records);		
+	});*/
+});
+
+app.all('/taskinfo', function(req, res){
+	if (currIdx != undefined) {
+		Task.find({}, function(err, records){
+			res.send(records,currIdx);		
+		});
+	}
+	Task.count({}, function(err,c) {
+		if( req.body.idx > -1 && req.body.idx < c ){
+			currIdx = req.body.idx;
+		}
+		else{
+			currIdx = undefined;
+		}
+	});
+	
+});
 
 app.listen(8000);

@@ -23,22 +23,37 @@
 	<body style="font-family:'Calibri'; text-align: center; height:100%">
 		<div class="vertical-align-middle">
 		<h1 style="color:#000000; font-size:30px;">Welcome to your To-Do List</h1>
+		<ul class="list-group">
+			<li class="list-group-item" ><a href="#" id= "t0" ></a></li>
+			<li class="list-group-item" ><a href="#" id= "t1" ></a></li>
+			<li class="list-group-item" ><a href="#" id= "t2" ></a></li>
+			<li class="list-group-item" ><a href="#" id= "t3" ></a></li>
+			<li class="list-group-item" ><a href="#" id= "t4" ></a></li>
+		</ul>
 		<script>
-			var array = []
 			$.get("/report", function( records ) {
-				records.forEach(function(record){
-					array.push(record);
-				});
-				console.log( record.name);
+				for( num = 0; num < 5; num++ ){
+					str = '#t' + num;
+					$(str).append(records[num].name);
+				}
+			});
+			$(document).on("click", "#t0", function(){
+				$.post("/taskinfo", {idx: 0} );
+				window.location = '/details';
+			});
+			$(document).on("click", "#t1", function(){
+				$.post("/taskinfo", {idx: 1} );
+			});
+			$(document).on("click", "#t2", function(){
+				$.post("/taskinfo", {idx: 2} );
+			});
+			$(document).on("click", "#t3", function(){
+				$.post("/taskinfo", {idx: 3} );
+			});
+			$(document).on("click", "#t4", function(){
+				$.post("/taskinfo", {idx: 4} );
 			});
 		</script>
-		<ul class="list-group">
-			<li class="list-group-item">Task 1</li>
-			<li class="list-group-item">Task 2</li>
-			<li class="list-group-item">Task 3</li>
-			<li class="list-group-item">Task 4</li>
-			<li class="list-group-item">Task 5</li>
-		</ul>
 		<button id="addtask" style="background:#428bca; color:#FFFFFF; border-radius:10px; font-size:18px; padding-left: 15px; padding-right: 15px; padding-top: 3px; padding-bottom: 3px;">Add New Task</button>
 		</div>
 		<script>

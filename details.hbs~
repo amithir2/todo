@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html style="height:100%">
+	<head>
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		<link type = "text/css" rel = "stylesheet" href = "css/bootstrap.css" />
+		<ul class = "nav nav-pills">
+			<li class="active" style = "width: 25%;"><a href="#" id = Home data-toggle = "tab">Home</a></li>
+			<li style = "width: 25%;"><a href="#" id = AddTask data-toggle = "tab">Add Task</a></li>
+		</ul>
+		<script>
+			$(document).on("click", "#Home", function(){
+				window.location = '/';
+			});
+
+			$(document).on("click", "#AddTask", function(){
+				window.location = '/addtask';
+			});
+		</script> 
+		<title>Team Tardis</title>
+	</head>
+
+	<body style="font-family:'Calibri'; text-align: center; height:100%">
+		<h1 style="color:#000000; font-size:30px;"></h1>
+		<div class= "panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">Due Date: </h2>
+			</div>
+			<p0 class="panel-body" ></div>
+		</div>
+		<div class= "panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Location: </h3>
+			</div>
+			<p1 class="panel-body"></div>
+		</div>
+		<div class= "panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">Description: </h4>
+			</div>
+			<p2 class="panel-body"></div>
+		</div>
+		<button id="ok" style="background:#428bca; color:#FFFFFF; border-radius:10px; font-size:18px; padding-left: 15px; padding-right: 15px; padding-top: 3px; padding-bottom: 3px;">Ok!</button>
+		<button id="complete" style="background:#428bca; color:#FFFFFF; border-radius:10px; font-size:18px; padding-left: 15px; padding-right: 15px; padding-top: 3px; padding-bottom: 3px;">Mark Task as Complete</button>
+		<button id="delete" style="background:red; color:#FFFFFF; border-radius:10px; font-size:18px; padding-left: 15px; padding-right: 15px; padding-top: 3px; padding-bottom: 3px;">Delete</button>
+		<script>
+			currIdx = 0;
+			$.get("/report", function( records ) {
+				$.get("/taskinfo", function( idx ) {
+					currIdx = idx;
+					$('h1').append(records[idx].name);
+					if( records[idx].due != undefined )
+						$('p0').append(records[idx].due);
+					if( records[idx].loc != undefined )
+						$('p1').append(records[idx].loc);
+					if( records[idx].des != undefined )
+						$('p2').append(records[idx].des);
+				});
+			});
+			$(document).on("click", "#ok", function(){
+				window.location = '/';
+			});
+			$(document).on("click", "#complete", function(){
+				window.location = '/';
+				$.post("/clear", {idx: currIdx});
+			});
+			$(document).on("click", "#delete", function(){
+				window.location = '/';
+				$.post("/clear", {idx: currIdx});
+			});
+		</script> 
+	</body>
+</html>

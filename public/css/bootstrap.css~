@@ -6,6 +6,7 @@
 
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
 html {
+  font-family: times;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
 }
@@ -4611,6 +4612,8 @@ a.thumbnail.active {
   margin-bottom: -1px;
   background-color: #fff;
   border: 1px solid #ddd;
+  left: 10%; 
+  width: 80%
 }
 .list-group-item:first-child {
   border-top-left-radius: 4px;
