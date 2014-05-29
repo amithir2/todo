@@ -44,10 +44,11 @@
 		<button id="complete" style="background:#428bca; color:#FFFFFF; border-radius:10px; font-size:18px; padding-left: 15px; padding-right: 15px; padding-top: 3px; padding-bottom: 3px;">Mark Task as Complete</button>
 		<button id="delete" style="background:red; color:#FFFFFF; border-radius:10px; font-size:18px; padding-left: 15px; padding-right: 15px; padding-top: 3px; padding-bottom: 3px;">Delete</button>
 		<script>
-			currIdx = 0;
+			id = 0;
 			$.get("/report", function( records ) {
 				$.get("/taskinfo", function( idx ) {
-					currIdx = idx;
+					id = records[idx]._id;
+					console.log(idx);
 					$('h1').append(records[idx].name);
 					if( records[idx].due != undefined )
 						$('p0').append(records[idx].due);
@@ -62,11 +63,11 @@
 			});
 			$(document).on("click", "#complete", function(){
 				window.location = '/';
-				$.post("/clear", {idx: currIdx});
+				$.post("/clear", {_id: id});
 			});
 			$(document).on("click", "#delete", function(){
 				window.location = '/';
-				$.post("/clear", {idx: currIdx});
+				$.post("/clear", {_id: id});
 			});
 		</script> 
 	</body>

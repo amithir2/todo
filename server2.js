@@ -44,15 +44,16 @@ app.get('/details', function(req, res){
 });
 
 app.get('/', function(req,res){
-	if( req.query.task !== undefined ){
+	if( req.query.task === undefined){  }
+	else if ( (req.query.task).length < 1 ) {  }
+	else{
 		var task = new Task({
 			name: req.query.task, 
 			des: req.query.des, 
 			due: req.query.due, 
 			loc: req.query.loc
 		}); 
-		
-		task.save(function (err, task) {
+		task.save(function (err) {
 			if(err) return console.error(err);
 			
 		});
@@ -73,15 +74,23 @@ app.all('/report', function(req,res){
 });
 
 app.all('/clear', function(req,res){
-/*	Task.find({}, function(err, records){
-		res.send(records);		
-	});*/
+	if( req.body._id != 'false' ){
+		Task.remove({_id: req.body._id}, function(err){
+			if (err) return handleError(err);
+		});	
+	}
+	else{
+		Task.remove({}, function(err){
+			if (err) return handleError(err);
+		});	
+	}
 });
 
 app.all('/taskinfo', function(req, res){
 	if (currIdx != undefined) {
 		Task.find({}, function(err, records){
-			res.send(records,currIdx);		
+			res.send(records,currIdx);
+					
 		});
 	}
 	Task.count({}, function(err,c) {

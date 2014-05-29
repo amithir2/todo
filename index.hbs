@@ -32,10 +32,10 @@
 		</ul>
 		<script>
 			$.get("/report", function( records ) {
-				for( num = 0; num < 5; num++ ){
+				for(num=0;num<5;num++){
 					str = '#t' + num;
 					$(str).append(records[num].name);
-				}
+				}	
 			});
 			$(document).on("click", "#t0", function(){
 				$.post("/taskinfo", {idx: 0} );
@@ -65,5 +65,14 @@
 				window.location = '/addtask';
 			});
 		</script> 
+		<!--<button id="delete" style="background:red; color:#FFFFFF; border-radius:10px; font-size:18px; padding-left: 15px; padding-right: 15px; padding-top: 3px; padding-bottom: 3px;">Remove All Tasks</button>
+		</div>
+		<script>
+			$(document).on("click", "#delete", function(){
+				$.post("/clear", {_id: 'false'} );
+				window.location = '/';
+			});
+		</script>-->
+
 	</body>
 </html>

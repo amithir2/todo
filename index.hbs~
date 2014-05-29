@@ -32,10 +32,10 @@
 		</ul>
 		<script>
 			$.get("/report", function( records ) {
-				for( num = 0; num < 5; num++ ){
+				for(num=0;num<5;num++){
 					str = '#t' + num;
 					$(str).append(records[num].name);
-				}
+				}	
 			});
 			$(document).on("click", "#t0", function(){
 				$.post("/taskinfo", {idx: 0} );
@@ -43,15 +43,19 @@
 			});
 			$(document).on("click", "#t1", function(){
 				$.post("/taskinfo", {idx: 1} );
+				window.location = '/details';
 			});
 			$(document).on("click", "#t2", function(){
 				$.post("/taskinfo", {idx: 2} );
+				window.location = '/details';
 			});
 			$(document).on("click", "#t3", function(){
 				$.post("/taskinfo", {idx: 3} );
+				window.location = '/details';
 			});
 			$(document).on("click", "#t4", function(){
 				$.post("/taskinfo", {idx: 4} );
+				window.location = '/details';
 			});
 		</script>
 		<button id="addtask" style="background:#428bca; color:#FFFFFF; border-radius:10px; font-size:18px; padding-left: 15px; padding-right: 15px; padding-top: 3px; padding-bottom: 3px;">Add New Task</button>
@@ -61,5 +65,14 @@
 				window.location = '/addtask';
 			});
 		</script> 
+		<button id="delete" style="background:red; color:#FFFFFF; border-radius:10px; font-size:18px; padding-left: 15px; padding-right: 15px; padding-top: 3px; padding-bottom: 3px;">Remove All Tasks</button>
+		</div>
+		<script>
+			$(document).on("click", "#delete", function(){
+				$.post("/clear", {_id: 'false'} );
+				window.location = '/';
+			});
+		</script>
+
 	</body>
 </html>
